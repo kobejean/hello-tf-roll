@@ -8,7 +8,8 @@ with tf.Session() as sess:
     x_len = tensor.get_shape().as_list()[1]
     # random roll amount
     i = tf.random_uniform(shape=[1], maxval=x_len, dtype=tf.int32)
-    output = tf.manip.roll(tensor, shift=i, axis=[1])
+    with tf.device('/gpu:0'):
+        output = tf.manip.roll(tensor, shift=i, axis=[1])
 
     for i in range(10):
         print(sess.run(output))
